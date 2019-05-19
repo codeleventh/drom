@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -12,9 +11,7 @@ import org.apache.commons.cli.ParseException;
 
 public class Drom {
 
-    public static void main(String[] args) throws IOException { // TODO: exception
-        //BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-
+    public static void main(String[] args) {
         Float maxTime, availability;
 
         Options options = new Options();
@@ -28,10 +25,11 @@ public class Drom {
             CommandLine cmd = parser.parse(options, args);
             maxTime = Float.valueOf(cmd.getOptionValue('t'));
             availability = Float.valueOf(cmd.getOptionValue('u'));
-            if (availability > 100.0f) {
+            if (maxTime <= 0 || availability < 0 || availability > 100) {
                 throw new IllegalArgumentException();
             }
 
+            //BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
             BufferedReader stdin = new BufferedReader(new FileReader("p:\\drom\\src\\test\\resources\\access.log"));
             LogAnalyzer analyzer = new LogAnalyzer(stdin, maxTime, availability);
             analyzer.parse();
@@ -39,6 +37,9 @@ public class Drom {
             System.out.println("Wrong args.");
             new HelpFormatter().printHelp("java -jar drom.jar", options);
             System.exit(2);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 

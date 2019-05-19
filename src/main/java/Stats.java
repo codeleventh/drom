@@ -1,25 +1,17 @@
 import java.time.LocalTime;
+import java.util.Locale;
 
 public class Stats {
-
     private Boolean inSpan;
     private LocalTime start, end;
 
     private Long successes, fails;
     private Float minAvail;
 
-    public Stats(Float minAvail) {
+    Stats(Float minAvail) {
         this.minAvail = minAvail;
-        successes = fails = 0l;
+        successes = fails = 0L;
         inSpan = false;
-    }
-
-    public Float predictAvail() {
-        return 100 * (float) (successes + 1) / (successes + fails + 1);
-    }
-
-    public Float calcAvail() {
-        return 100 * (float) successes / (successes + fails);
     }
 
     public void process(LocalTime time, Boolean isFailure) {
@@ -44,11 +36,20 @@ public class Stats {
 
     @Override
     public String toString() {
-        return String.format("%s\t%s\t%.2f",
+        return String.format(Locale.US, "%s\t%s\t%.2f",
                              start, end, calcAvail());
     }
 
     public Boolean getInSpan() {
         return inSpan;
     }
+
+    private Float predictAvail() {
+        return 100 * (float) (successes + 1) / (successes + fails + 1);
+    }
+
+    private Float calcAvail() {
+        return 100 * (float) successes / (successes + fails);
+    }
+
 }
