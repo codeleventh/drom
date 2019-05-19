@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -29,8 +29,7 @@ public class Drom {
                 throw new IllegalArgumentException();
             }
 
-            //BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader stdin = new BufferedReader(new FileReader("p:\\drom\\src\\test\\resources\\access.log"));
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
             LogAnalyzer analyzer = new LogAnalyzer(stdin, maxTime, availability);
             analyzer.parse();
         } catch (ParseException | IllegalArgumentException e) {
