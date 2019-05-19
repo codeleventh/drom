@@ -23,10 +23,6 @@ public class Stats {
     }
 
     public void process(LocalTime time, Boolean isFailure) {
-        if (inSpan) {
-            end = time;
-        }
-
         if (isFailure) {
             fails++;
         } else {
@@ -37,6 +33,9 @@ public class Stats {
             successes++;
         }
 
+        if (inSpan) {
+            end = time;
+        }
         if (calcAvail() < minAvail && !inSpan) {
             inSpan = true;
             start = end = time;
