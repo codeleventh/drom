@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -12,7 +13,7 @@ import org.apache.commons.cli.ParseException;
 public class Drom {
 
     public static void main(String[] args) throws IOException { // TODO: exception
-        //        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
         Float maxTime, availability;
 
@@ -27,8 +28,9 @@ public class Drom {
             CommandLine cmd = parser.parse(options, args);
             maxTime = Float.valueOf(cmd.getOptionValue('t'));
             availability = Float.valueOf(cmd.getOptionValue('u'));
-            if(availability > 100.0f)
+            if (availability > 100.0f) {
                 throw new IllegalArgumentException();
+            }
 
             BufferedReader stdin = new BufferedReader(new FileReader("p:\\drom\\src\\test\\resources\\access.log"));
             LogAnalyzer analyzer = new LogAnalyzer(stdin, maxTime, availability);
